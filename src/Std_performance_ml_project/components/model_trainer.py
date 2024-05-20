@@ -51,11 +51,23 @@ class ModelTrainer:
 
             best_params = params[actual_model]
             
+            save_object(
+                file_path=self.model_trainer_config.trainer_model_file_path,
+                obj=best_model
+            )
+            predicted=best_model.predict(X_test)
+
+            r2_square = r2_score(y_test, predicted)
+
             return(
+                X_test,
+                y_test,
+                actual_model,
                 best_model,
                 best_model_score,
                 model_report,
-                best_params
+                best_params,
+                r2_square
             )
         except Exception as e:
             raise CustomException(e,sys)
