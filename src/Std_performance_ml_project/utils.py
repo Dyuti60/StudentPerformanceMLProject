@@ -18,8 +18,8 @@ from sklearn.svm import SVR
 from sklearn.tree import DecisionTreeRegressor
 from sklearn.ensemble import RandomForestRegressor,AdaBoostRegressor,GradientBoostingRegressor
 from sklearn.neighbors import KNeighborsRegressor
-from Xgboost import XGBRegressor
-from Catboost import CatBoostRegressor
+from xgboost import XGBRegressor
+from catboost import CatBoostRegressor
 
 import pymysql
 import pickle

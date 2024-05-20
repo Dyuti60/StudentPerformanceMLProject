@@ -14,7 +14,7 @@ class ModelMonitoring:
         try:
             mlflow.set_registry_uri("https://dagshub.com/krishnaik06/mlprojecthindi.mlflow")
             tracking_url_type_store = urlparse(mlflow.get_tracking_uri()).scheme
-            
+
             with mlflow.start_run():
 
                 predicted_qualities = best_model.predict(X_test)
@@ -27,7 +27,6 @@ class ModelMonitoring:
                 mlflow.log_metric("mse", mae)
                 mlflow.log_metric("r2", r2)
                 mlflow.log_metric("mae", mae)
-
 
 
                 # Model registry does not work with file store
