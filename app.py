@@ -1,9 +1,10 @@
-from src.mlproject.logger import logging
-from src.mlproject.exception import CustomException
-from src.mlproject.components.data_ingestion import DataIngestion
-from src.mlproject.components.data_ingestion import DataIngestionConfig
-from src.mlproject.components.data_transformation import DataTransformationConfig,DataTransformation
-from src.mlproject.components.model_tranier import ModelTrainerConfig,ModelTrainer
+from src.Std_performance_ml_project.components.data_ingestion import DataIngestion
+from src.Std_performance_ml_project.components.data_transformation import DataTransformation
+#from src.Std_performance_ml_project.components.model_trainer import ModelTrainer
+#from src.Std_performance_ml_project.components.model_monitoring import ModelMonitoring
+from src.Std_performance_ml_project.exception import MLException
+from src.Std_performance_ml_project.logger import logging
+import numpy as np
 
 import sys
 
@@ -12,16 +13,17 @@ if __name__=="__main__":
     logging.info("The execution has started")
 
     try:
-        data_ingestion=DataIngestion()
-        train_data_path,test_data_path=data_ingestion.initiate_data_ingestion()
+        DataIngestion=DataIngestion()
+        train_data_path,test_data_path,raw_data_path=DataIngestion.initiate_data_ingestion()
 
-        data_transformation=DataTransformation()
-        train_arr,test_arr,_=data_transformation.initiate_data_transormation(train_data_path,test_data_path)
+        DataTransformation=DataTransformation()
+        train_array,test_array,preprocessor_obj=DataTransformation.initiate_DataTransformation(raw_data_path,train_data_path,test_data_path)
 
-        ## Model Training
-        model_trainer=ModelTrainer()
-        print(model_trainer.initiate_model_trainer(train_arr,test_arr))
-        
+        #ModelTrainer=ModelTrainer()
+        #ModelTrainer.initiate_model_training(train_array,test_array)
+
+        #ModelMonitoring=ModelMonitoring()
+        #ModelMonitoring.initiate_model_training()
+
     except Exception as e:
-        logging.info("Custom Exception")
-        raise CustomException(e,sys)
+        raise  MLException(e,sys)

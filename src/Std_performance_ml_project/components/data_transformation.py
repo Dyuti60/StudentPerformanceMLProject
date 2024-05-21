@@ -16,7 +16,7 @@ from sklearn.pipeline import Pipeline
 
 
 from src.Std_performance_ml_project.utils import save_object
-from src.Std_performance_ml_project.exception import CustomException
+from src.Std_performance_ml_project.exception import MLException
 from src.Std_performance_ml_project.logger import logging
 
 @dataclass
@@ -40,10 +40,13 @@ class DataTransformation:
         try:
             #fetch data:
             raw_data=pd.read_csv(raw_data_path)
-
+            target_feature='math_score'
+            raw_data=raw_data.drop(columns=target_feature,axis=1)
             # Divide into Numerical and Categorical features:
-            numerical_features=raw_data.select_dtypes(include=['int64','float64']).columns
+            numerical_features=raw_data.select_dtypes(exclude=['object']).columns
             categorical_features=raw_data.select_dtypes(include=['object']).columns
+            print(numerical_features)
+            print(categorical_features)
 
             #Numerical feature Pipeline
             num_pipeline=Pipeline(steps=[
@@ -54,7 +57,7 @@ class DataTransformation:
             cat_pipeline=Pipeline(steps=[
                 ('simpleImpute',SimpleImputer(strategy='most_frequent')),
                 ('Encoding',OneHotEncoder()),
-                ('Scaling',StandardScaler())
+                ('Scaling',StandardScaler(with_mean=False))
             ])
             #Column Transformer
             preprocessor=ColumnTransformer(
@@ -66,7 +69,7 @@ class DataTransformation:
             return preprocessor
 
         except Exception as e:
-            raise CustomException(e)
+            raise MLException(e,sys)
 
     def initiate_DataTransformation(self,raw_data_path,train_data_path,test_data_path):
         '''
@@ -78,7 +81,7 @@ class DataTransformation:
             logging.info('Reading data from test and train file path')
 
             #Get the data transformation object:
-            preprocessor_obj=self.get_data_transformation_object(self,raw_data_path)
+            preprocessor_obj=self.get_data_transformation_object(raw_data_path)
 
             #Target Feature:
             target_feature='math_score'
@@ -91,6 +94,9 @@ class DataTransformation:
             input_feature_test_df=test_df.drop(columns=[target_feature],axis=1)
             target_feature_test_df=test_df[target_feature]
 
+            print(target_feature_train_df.head(10))
+            print(target_feature_test_df.head(10))
+
             logging.info("Applying preprocessing into train and test datasets - Input features only")
             
             # Applying preprocessing to input features of train and test datasets
@@ -98,12 +104,12 @@ class DataTransformation:
             input_feature_test_arr=preprocessor_obj.fit_transform(input_feature_test_df)
 
             #Combine the input and target features into train array
-            train_arr=np.concatenate(input_feature_train_arr,np.array(target_feature_train_df))
+            train_arr=np.c_[input_feature_train_arr,np.array(target_feature_train_df)]
             
             #Combine the input and target features into test array
-            test_arr=np.concatenate(input_feature_test_arr,np.array(target_feature_test_df))
+            test_arr=np.c_[input_feature_test_arr,np.array(target_feature_test_df)]
 
-            save_object(filepath=self.data_transformation_config.preprocessor_obj_file_path,
+            save_object(file_path=self.data_transformation_config.preprocessor_obj_file_path,
                         obj=preprocessor_obj)
 
             return (
@@ -113,4 +119,4 @@ class DataTransformation:
             )
 
         except Exception as e:
-            raise CustomException(e)
+            raise MLException(e,sys)

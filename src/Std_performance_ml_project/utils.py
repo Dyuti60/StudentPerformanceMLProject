@@ -1,11 +1,11 @@
 import os
 import sys
-from src.Std_performance_ml_project.exception import CustomException
+from src.Std_performance_ml_project.exception import MLException
 from src.Std_performance_ml_project.logger import logging
 
 import pandas as pd
 import numpy as np
-#from dotenv import load_dotenv
+from dotenv import load_dotenv
 from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import r2_score,mean_squared_error,mean_absolute_error
 from sklearn.model_selection import train_test_split
@@ -25,26 +25,31 @@ import pymysql
 import pickle
 
 # Set up connection to My SQL : Constant
-#load_dotenv()
+load_dotenv()
 host = os.getenv('host')
 user = os.getenv('user')
 password=os.getenv('password')
 db=os.getenv('db')
 
 def read_sql_Data():
-    logging.INFO('Reading the SQL Database : Started')
+    logging.info('Reading the SQL Database : Started')
     try:
         mydb=pymysql.connect(
-            host=host,
-            user=user,
-            password=password,
-            db=db
+            host='127.0.0.1',
+            port=3306,
+            user='root',
+            password='Satsang@123',
+            db='student_details',
         )
         logging.info('Connection Established to Database')
-        df=pd.read_sql_query('Select * from Students',mydb)
+        cursor=mydb.cursor()
+        cursor.execute('Select * from student_performance')
+        field_names=[i[0] for i in cursor.description]
+        df=pd.DataFrame(data=cursor.fetchall(),index=None,columns=field_names)
+        mydb.close()
         return df
     except Exception as e:
-        raise CustomException(e)
+        raise MLException(e,sys)
     
 def save_object(file_path,obj):
     try:
@@ -53,7 +58,7 @@ def save_object(file_path,obj):
         with open(file_path,'wb') as file_obj:
             pickle.dump(obj,file_obj)
     except Exception as e:
-        raise CustomException(e)
+        raise MLException(e,sys)
     
 def models_dict():
     models={
@@ -67,7 +72,7 @@ def models_dict():
         'Gradient Boosting Regression':GradientBoostingRegressor(),
         'Ada Boost Regression':AdaBoostRegressor(),
         'XGBoost Regression':XGBRegressor(),
-        'CatBoot Regression':CatBootRegressor()
+        'CatBoot Regression':CatBoostRegressor()
     }
     return models
 
@@ -171,7 +176,7 @@ def evaluate_models(X_train,X_test,y_train,y_test,models,params):
         report=pd.DataFrame(zip(models_list,accuracy_list),columns=['Model','Accuracy'])
         return report
     except Exception as e:
-        raise CustomException(e)
+        raise MLException(e,sys)
 
     
 
