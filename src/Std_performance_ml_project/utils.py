@@ -72,7 +72,7 @@ def models_dict():
         'Gradient Boosting Regression':GradientBoostingRegressor(),
         'Ada Boost Regression':AdaBoostRegressor(),
         'XGBoost Regression':XGBRegressor(),
-        'CatBoot Regression':CatBoostRegressor()
+        'CatBoost Regression':CatBoostRegressor()
     }
     return models
 
@@ -85,7 +85,7 @@ def hyperparameterTuning_Params():
             'alpha':[1.0,0.2,0.4,0.6,2.0,4.0,5.0]
         },
         'SVR':{
-            'kernel':['linear', 'poly', 'rbf', 'sigmoid', 'precomputed'],
+            'kernel':['linear', 'poly', 'rbf', 'sigmoid'],
             'C':[1,2,3,4,5,6,7,8,9,10],
             'epsilon':[0.1,0.2,0.5,0.8,1.0,1.2] 
         },
@@ -100,7 +100,7 @@ def hyperparameterTuning_Params():
         },
         'Random Forest Regression':{
             'criterion':['squared_error', 'friedman_mse', 'absolute_error', 'poisson'],
-            'n-estimators':[8,16,32,64,128],
+            'n_estimators':[8,16,32,64,128],
             'max_features':['sqrt','log2']
         },
         'Gradient Boosting Regression':{
@@ -116,12 +116,12 @@ def hyperparameterTuning_Params():
             'n_estimators': [8,16,32,64,128,256]
         },
 
-        "CatBoosting Regressor":{
+        "CatBoost Regression":{
             'depth': [6,8,10],
             'learning_rate': [0.01, 0.05, 0.1],
             'iterations': [30, 50, 100]
         },
-        "AdaBoost Regressor":{
+        "Ada Boost Regression":{
             'learning_rate':[.1,.01,0.5,.001],
             # 'loss':['linear','square','exponential'],
             'n_estimators': [8,16,32,64,128,256]
@@ -147,13 +147,13 @@ def evaluate_models(X_train,X_test,y_train,y_test,models,params):
         report=[]
         models_list=[]
         accuracy_list=[]
-        for i in range(len(models)):
+        for i in range(len(list(models))):
             #Have Model Function:
             model=list(models.values())[i]
-
+            print(model)
             #Have parameters for each model:
             param=params[list(models.keys())[i]]
-
+            print(param)
 
             #Hyperparameter Tuning:
             gs=GridSearchCV(model,param,cv=5)
@@ -162,8 +162,8 @@ def evaluate_models(X_train,X_test,y_train,y_test,models,params):
             gs.fit(X_train,y_train)
 
             #Predict Data '.predict':
-            y_train_pred=model.predict(X_train)
-            y_test_pred=model.predict(X_test)
+            y_train_pred=gs.predict(X_train)
+            y_test_pred=gs.predict(X_test)
 
             #Train Data Model Performance:
             mae_train,mse_train,rmse_train,r2_train=calculate_Score_Regression(y_train, y_train_pred)
@@ -173,7 +173,8 @@ def evaluate_models(X_train,X_test,y_train,y_test,models,params):
 
             models_list.append(list(models.keys())[i])
             accuracy_list.append(r2_test)
-        report=pd.DataFrame(zip(models_list,accuracy_list),columns=['Model','Accuracy'])
+        report=pd.DataFrame(list(zip(models_list,accuracy_list)),columns=['Model','Score']).sort_values(by='Score',ascending=False)
+        report=report.reset_index(drop=True)
         return report
     except Exception as e:
         raise MLException(e,sys)

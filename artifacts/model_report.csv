@@ -1,0 +1,12 @@
+,Model,Score
+0,Ridge,0.860032852
+1,SVR,0.859866974
+2,Lasso,0.859096477
+3,Gradient Boosting Regression,0.849036149
+4,Ada Boost Regression,0.841406361
+5,CatBoost Regression,0.836787967
+6,Random Forest Regression,0.799134016
+7,Decision Tree Regression,0.62618353
+8,KNN,0.544068093
+9,XGBoost Regression,0.277973632
+10,Linear Regression,-1.19E+23
