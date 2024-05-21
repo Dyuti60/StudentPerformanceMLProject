@@ -10,6 +10,7 @@ from sklearn.metrics import mean_squared_error,mean_absolute_error,r2_score
 
 from src.Std_performance_ml_project.exception import MLException
 from src.Std_performance_ml_project.logger import logging
+from sklearn.model_selection import GridSearchCV
 from src.Std_performance_ml_project.utils import save_object,evaluate_models,calculate_Score_Regression, models_dict,hyperparameterTuning_Params
 
 @dataclass
@@ -43,6 +44,7 @@ class ModelTrainer:
 
             ## To get the hyperparameter for the best model
             best_params = params[best_model_name]
+
             
             
             save_object(
@@ -52,7 +54,9 @@ class ModelTrainer:
             model_report.to_csv(self.model_trainer_config.trainer_model_report_file_path)
 
             return(
+                X_train,
                 X_test,
+                y_train,
                 y_test,
                 best_model_name,
                 best_model,

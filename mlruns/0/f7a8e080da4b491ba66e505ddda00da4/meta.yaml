@@ -1,0 +1,15 @@
+artifact_uri: file:///F:/Hind_ML_Project_End_To_End/Student_Math_Performance_ML_Project/mlruns/0/f7a8e080da4b491ba66e505ddda00da4/artifacts
+end_time: 1716277271530
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: f7a8e080da4b491ba66e505ddda00da4
+run_name: whimsical-asp-150
+run_uuid: f7a8e080da4b491ba66e505ddda00da4
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1716277266700
+status: 3
+tags: []
+user_id: root

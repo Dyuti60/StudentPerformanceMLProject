@@ -1,12 +1,12 @@
 ,Model,Score
-0,Ridge,0.860032852
-1,SVR,0.859866974
-2,Lasso,0.859096477
-3,Gradient Boosting Regression,0.849036149
-4,Ada Boost Regression,0.841406361
-5,CatBoost Regression,0.836787967
-6,Random Forest Regression,0.799134016
-7,Decision Tree Regression,0.62618353
-8,KNN,0.544068093
-9,XGBoost Regression,0.277973632
-10,Linear Regression,-1.19E+23
+0,Ridge,0.8600328521118612
+1,SVR,0.8598669735592857
+2,Lasso,0.85909647666197
+3,Gradient Boosting Regression,0.8478818099986609
+4,Ada Boost Regression,0.8408667413779143
+5,CatBoost Regression,0.8367879673081114
+6,Random Forest Regression,0.7925937520655761
+7,Decision Tree Regression,0.6062243391575668
+8,KNN,0.5440680930722781
+9,XGBoost Regression,0.277973631763649
+10,Linear Regression,-1.189064203371996e+23

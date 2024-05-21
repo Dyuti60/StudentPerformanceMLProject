@@ -1,0 +1,15 @@
+artifact_uri: file:///F:/Hind_ML_Project_End_To_End/Student_Math_Performance_ML_Project/mlruns/0/b339c7d1f0be4d63b96a67c6cd918b0e/artifacts
+end_time: 1716276993664
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: b339c7d1f0be4d63b96a67c6cd918b0e
+run_name: painted-deer-580
+run_uuid: b339c7d1f0be4d63b96a67c6cd918b0e
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1716276988341
+status: 3
+tags: []
+user_id: root

@@ -10,16 +10,13 @@ from src.Std_performance_ml_project.utils import calculate_Score_Regression,save
 
 # mlflow
 class ModelMonitoring:
-    def initiate_model_training(self,X_test,y_test,best_model_name,best_model,best_model_score,best_params):
+    def initiate_model_training(self,rmse,mse,r2,mae,best_model_name,best_model,best_model_score,best_params):
         try:
-            mlflow.set_registry_uri("https://dagshub.com/krishnaik06/mlprojecthindi.mlflow")
+            mlflow.set_registry_uri("https://dagshub.com/Dyuti60/StudentPerformanceMLProject.mlflow")
             tracking_url_type_store = urlparse(mlflow.get_tracking_uri()).scheme
 
             with mlflow.start_run():
 
-                predicted_qualities = best_model.predict(X_test)
-
-                (mae,mse,rmse,r2) = calculate_Score_Regression(y_test, predicted_qualities)
 
                 mlflow.log_params(best_params)
                 mlflow.log_metric("rmse", rmse)
@@ -39,7 +36,7 @@ class ModelMonitoring:
                 else:
                     mlflow.sklearn.log_model(best_model, "model")
 
-            if best_model_score<0.6:
+            if float(best_model_score)<0.6:
                 raise MLException("No best model found")
             logging.info(f"Best found model on both training and testing dataset")
 

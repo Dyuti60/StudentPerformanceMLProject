@@ -1,0 +1,15 @@
+artifact_uri: file:///F:/Hind_ML_Project_End_To_End/Student_Math_Performance_ML_Project/mlruns/0/4dde7d375b704cc7a98fce872df2cc91/artifacts
+end_time: 1716273696729
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 4dde7d375b704cc7a98fce872df2cc91
+run_name: aged-carp-567
+run_uuid: 4dde7d375b704cc7a98fce872df2cc91
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1716273696548
+status: 4
+tags: []
+user_id: root

@@ -1,0 +1,15 @@
+artifact_uri: file:///F:/Hind_ML_Project_End_To_End/Student_Math_Performance_ML_Project/mlruns/0/8bba33bb7d1b40bbb12d4a1cf66f6f53/artifacts
+end_time: 1716276535587
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 8bba33bb7d1b40bbb12d4a1cf66f6f53
+run_name: overjoyed-sheep-342
+run_uuid: 8bba33bb7d1b40bbb12d4a1cf66f6f53
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1716276529269
+status: 3
+tags: []
+user_id: root
